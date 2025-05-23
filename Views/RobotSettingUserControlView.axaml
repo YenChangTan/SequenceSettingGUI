@@ -1,0 +1,25 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="https://github.com/avaloniaui"
+    xmlns:vm="using:SequenceSettingGUI.ViewModels"
+    x:DataType = "vm:RobotSettingUserControlViewModel"
+    x:Class="SequenceSettingGUI.Views.RobotSettingUserControlView">
+
+    <!-- <UserControl.DataContext>
+        <vm:RobotSettingUserControlViewModel/>
+    </UserControl.DataContext> -->
+    <Grid>
+        <StackPanel>
+            <TextBox Text = "{Binding IPAddress}"/>
+            <Button Content= "Connect" Command= "{Binding ConnectCommand}" Width="100" Height="30"/>
+            <Ellipse  Width="30" Height="30">
+                <Ellipse.Fill>
+                    <Binding Path="IsConnected" Converter="{StaticResource BooleanToStatusFillConverter}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <TextBlock Text= "{Binding IPAddress}"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

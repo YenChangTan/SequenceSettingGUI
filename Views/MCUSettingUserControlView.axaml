@@ -1,0 +1,12 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="https://github.com/avaloniaui"
+    xmlns:vm="using:SequenceSettingGUI.ViewModels"
+    x:Class="SequenceSettingGUI.Views.MCUSettingUserControlView">
+
+    <!-- <UserControl.DataContext>
+        <vm:MCUSettingUserControlViewModel/>
+    </UserControl.DataContext> -->
+    <TextBlock Text="Hello here is mcusetting page" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+</UserControl>

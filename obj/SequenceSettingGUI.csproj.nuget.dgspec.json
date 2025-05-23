@@ -1,0 +1,103 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/sip-rnd/SequenceSettingGUI/SequenceSettingGUI.csproj": {}
+  },
+  "projects": {
+    "/home/sip-rnd/SequenceSettingGUI/SequenceSettingGUI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/sip-rnd/SequenceSettingGUI/SequenceSettingGUI.csproj",
+        "projectName": "SequenceSettingGUI",
+        "projectPath": "/home/sip-rnd/SequenceSettingGUI/SequenceSettingGUI.csproj",
+        "packagesPath": "/home/sip-rnd/.nuget/packages/",
+        "outputPath": "/home/sip-rnd/SequenceSettingGUI/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sip-rnd/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Avalonia": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "Avalonia.Desktop": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "Avalonia.Diagnostics": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "Avalonia.Fonts.Inter": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "Avalonia.ReactiveUI": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "Avalonia.Themes.Fluent": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.2.1, )"
+            },
+            "H.ReactiveUI.CommonInteractions.Avalonia": {
+              "target": "Package",
+              "version": "[1.0.56, )"
+            },
+            "ReactiveUI": {
+              "target": "Package",
+              "version": "[20.2.45, )"
+            },
+            "ReactiveUI.Blazor": {
+              "target": "Package",
+              "version": "[20.2.45, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

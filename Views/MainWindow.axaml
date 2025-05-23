@@ -1,0 +1,85 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SequenceSettingGUI.ViewModels"
+        xmlns:views="using:SequenceSettingGUI.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SequenceSettingGUI.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SequenceSettingGUI"
+        PointerPressed="Window_PointerPressed"
+        PointerMoved="Window_PointerMoved"
+        PointerReleased="Window_PointerReleased">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <!-- <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row = "0">
+            <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name = "Home" Content="Home" Grid.Column = "0"/>
+            <Button x:Name = "Configuration" Content="Configuration" Grid.Column= "1"/>
+        </Grid>
+    </Grid> -->
+    <Grid>
+        <!-- Main Content -->
+        <rxui:ViewModelViewHost ViewModel="{Binding CurrentView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border x:Name="SlideOutMenu"
+                Width="200"
+                Background="DarkBlue"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Left"
+                RenderTransformOrigin="0,0">
+            <Border.RenderTransform>
+                <TranslateTransform X="-200"/>
+            </Border.RenderTransform>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button Width="80" Height="80" Grid.Row="0" HorizontalAlignment="Center" CornerRadius="50">
+                    <Viewbox Stretch= "Uniform">
+                        <Path Data="{StaticResource DashboardIcon}" Fill="Black"/>
+                    </Viewbox>
+                </Button>
+                <Button Width="80" Height="80" Grid.Row="1" HorizontalAlignment="Center" CornerRadius="50">
+                    <Viewbox Stretch= "Uniform">
+                        <Path Data="{StaticResource RecipeIcon}" Fill="Black"/>
+                    </Viewbox>
+                </Button>
+                <Button Command="{Binding ShowMCUSettingCommand}" Width="80" Height="80" Grid.Row="2" HorizontalAlignment="Center" CornerRadius="50">
+                    <Viewbox Stretch= "Uniform">
+                        <Path Data="{StaticResource DeveloperBoardIcon}" Fill="Black"/>
+                    </Viewbox>
+                </Button>
+                <Button Command="{Binding ShowRobotSettingCommand}" Width="80" Height="80" Grid.Row="3" HorizontalAlignment="Center" CornerRadius="50">
+                    <Viewbox Stretch= "Uniform">
+                        <Path Data="{StaticResource RobotIcon}" Fill="Black"/>
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </Border>
+        
+    </Grid>
+</Window>
