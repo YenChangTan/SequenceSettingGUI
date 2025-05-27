@@ -31,5 +31,8 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/home/sip-rnd/SequenceSettingGUI/Views/MCUSettingUserControlView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/sip-rnd/SequenceSettingGUI/Views/OutputsSettingDialogWIndow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/sip-rnd/SequenceSettingGUI/Views/RobotSettingUserControlView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

@@ -3,10 +3,101 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="https://github.com/avaloniaui"
     xmlns:vm="using:SequenceSettingGUI.ViewModels"
+    x:DataType="vm:MCUSettingUserControlViewModel"
     x:Class="SequenceSettingGUI.Views.MCUSettingUserControlView">
 
-    <!-- <UserControl.DataContext>
-        <vm:MCUSettingUserControlViewModel/>
-    </UserControl.DataContext> -->
-    <TextBlock Text="Hello here is mcusetting page" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <DockPanel>
+        <DockPanel DockPanel.Dock = "Top">
+            <Grid DockPanel.Dock="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height= "*"/>
+                    <RowDefinition Height = "*"/>
+                    <RowDefinition Height = "*"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row = "0" Name="IP" Text="{Binding _mcu.IP}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <TextBox Grid.Row = "1" Name="Port" Text = "{Binding _mcu.Port}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button Grid.Row = "2" Name="ConnectButton" Content="Connect" Command="{Binding _mcu.ConnectToMCUCommand}" Width="200" Height="30"/>
+            </Grid>
+            <DockPanel>
+                <Grid DockPanel.Dock="Left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height = "*"/>
+                        <RowDefinition Height = "*"/>
+                        <RowDefinition Height = "*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row = "0" Text="Index" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row = "1" Text="Output" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row = "2" Text="Input" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid>
+                    <ItemsControl ItemsSource = "{Binding _mcu.outputsInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height = "*"/>
+                                        <RowDefinition Height = "*"/>
+                                        <RowDefinition Height = "*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row = "0" Text = "{Binding output.Index}" HorizontalAlignment="Center"/>
+                                    <Ellipse Margin="0,4,0,4" Grid.Row = "1" Fill = "{Binding output.IsOn, Converter={StaticResource BooleanToStatusFillConverter}}" Height="30" Width="30" HorizontalAlignment="Stretch"/>
+                                    <Ellipse Margin="0,4,0,4" Grid.Row = "2" Fill = "{Binding input.IsOn, Converter= {StaticResource BooleanToStatusFillConverter}}" Height="30" Width = "30" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </DockPanel>
+        </DockPanel>
+        <Grid DockPanel.Dock = "Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+            </Grid.ColumnDefinitions>
+            <ItemsControl Grid.Column="0" Grid.ColumnSpan = "16" ItemsSource = "{Binding _mcu.outputsInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height = "*"/>
+                                <RowDefinition Height = "*"/>
+                                <RowDefinition Height = "*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row = "0" Text = "{Binding output.Index}"/>
+                            <Button Margin = "1" Grid.Row = "1" Command="{Binding output.WriteOutputOn}" Height="30" HorizontalAlignment="Stretch"/>
+                            <Button Margin = "1" Grid.Row = "2" Command="{Binding output.WriteOutputOff}" Height="30" HorizontalAlignment="Stretch"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button Grid.Column="16" Content="All" Command="{Binding _mcu.WriteOutputCommand}" HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch"/>
+        </Grid>
+        <Grid>
+        </Grid>
+    </DockPanel>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using SequenceSettingGUI.Views;
+using Splat;
 using System.Reactive;
 
 
@@ -7,7 +8,7 @@ namespace SequenceSettingGUI.ViewModels;
 
 public class MainWindowViewModel : ReactiveObject
 {
-    private ReactiveObject _currentView = new MCUSettingUserControlViewModel();
+    private ReactiveObject _currentView;
     public ReactiveObject CurrentView
     {
         get => _currentView;
@@ -20,9 +21,9 @@ public class MainWindowViewModel : ReactiveObject
 
     public MainWindowViewModel()
     {
-        CurrentView = new MCUSettingUserControlViewModel();
-        ShowMCUSettingCommand = ReactiveCommand.Create(() => { CurrentView = new MCUSettingUserControlViewModel(); });
-        ShowRobotSettingCommand = ReactiveCommand.Create(() => { CurrentView = new RobotSettingUserControlViewModel(); });
+        CurrentView = Locator.Current.GetService<MCUSettingUserControlViewModel>();
+        ShowMCUSettingCommand = ReactiveCommand.Create(() => { CurrentView = Locator.Current.GetService<MCUSettingUserControlViewModel>(); });
+        ShowRobotSettingCommand = ReactiveCommand.Create(() => { CurrentView = Locator.Current.GetService<RobotSettingUserControlViewModel>(); });
     }
 
 

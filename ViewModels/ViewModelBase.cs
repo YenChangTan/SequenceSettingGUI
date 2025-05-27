@@ -4,4 +4,5 @@ namespace SequenceSettingGUI.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {
+    
 }

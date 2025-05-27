@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
+using SequenceSettingGUI.Interfaces;
 
 namespace SequenceSettingGUI.Services;
 
-public class TCPClientService
+public class TCPClientService : ITCPClientService
 {
-    public string IP{ get; set; }
+    private readonly object _lock = new();
+    public string IP { get; set; }
 
-    public int Port{ get; set; }
+    public int Port { get; set; }
 
     private Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     private readonly string[] CommandStr = new string[]{
@@ -31,44 +35,32 @@ public class TCPClientService
         return true;
     }
 
-    
+
     public bool Connect()
     {
-        try
+        lock (_lock)
         {
-            socket.Connect(IPAddress.Parse(IP), Port);
-            return true;
+            try
+            {
+                socket.Connect(IPAddress.Parse(IP), Port);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
-        catch
-        {
-            return false;
-        }
-        
     }
 
-    public bool Send(byte[] Command)
-    {
-        socket.Send(Command);
-        return true;
-    }
-
-    public bool Receive()
-    {
-        
-        return false;
-    }
-
-    
-
-    public async Task<bool> SendAndReceiveEcho(byte[] Command)
+    public bool SendAndReceiveEcho(byte[] Command)
     {
         byte[] ReceivedEcho = new byte[Command.Length];
-        int SentByteCount = await socket.SendAsync(Command);
+        int SentByteCount = socket.Send(Command);
         if (Command.Length != SentByteCount)
         {
             return false;
         }
-        int ReceivedByteCount = await socket.ReceiveAsync(ReceivedEcho);
+        int ReceivedByteCount = socket.Receive(ReceivedEcho);
         if (ReceivedByteCount != SentByteCount)
         {
             return false;
@@ -80,59 +72,95 @@ public class TCPClientService
         return true;
     }
 
-    public async Task<bool> WriteOutput(int OutputIndex, bool On)
+    public bool WriteOutput(bool On, int OutputIndex)
     {
-        if (OutputIndex >= 0 && OutputIndex < 16)
+        lock (_lock)
         {
-            
-            int CommandIndex = On ? 2 : 3;
-            List<byte> CommandList = [.. Encoding.ASCII.GetBytes(CommandStr[CommandIndex])];
-            CommandList[3] = (byte)('0' + (OutputIndex / 10));
-            CommandList[4] = (byte)('0' + (OutputIndex % 10));
-            CommandList.AddRange(CRCGenerator(CommandList));
-            byte[] Command = CommandList.ToArray();
-            bool result = await SendAndReceiveEcho(Command);
-            return false;
-        }
-        else
-        {
-            return false;
+            if (OutputIndex >= 0 && OutputIndex < 16)
+            {
+                OutputIndex += 1;
+                int CommandIndex = !On ? 2 : 3;
+                List<byte> CommandList = [.. Encoding.ASCII.GetBytes(CommandStr[CommandIndex])];
+                CommandList[3] = (byte)('0' + (OutputIndex / 10));
+                CommandList[4] = (byte)('0' + (OutputIndex % 10));
+                CommandList.AddRange(CRCGenerator(CommandList));
+                byte[] Command = CommandList.ToArray();
+                bool result = SendAndReceiveEcho(Command);
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
 
-    public async Task<bool> WriteOutput(bool[] OutputArray)
+    public bool WriteOutput(bool[] OutputArray)
     {
-        if (OutputArray.Length != 16)
+        lock (_lock)
         {
-
-            List<byte> CommandList = [.. Encoding.ASCII.GetBytes(CommandStr[1])];
-            CommandList.AddRange(OutputArrayToTwoByte(OutputArray));
-            CommandList.AddRange(CRCGenerator(CommandList));
-            byte[] Command = CommandList.ToArray();
-            bool result = await SendAndReceiveEcho(Command);
-            return true;
-        }
-        else
-        {
-            return false;
+            if (OutputArray.Length == 16)
+            {
+                Debug.WriteLine("Write Output Successfully");
+                List<byte> CommandList = [.. Encoding.ASCII.GetBytes(CommandStr[1])];
+                CommandList.AddRange(OutputArrayToTwoByte(OutputArray));
+                CommandList.AddRange(CRCGenerator(CommandList));
+                byte[] Command = CommandList.ToArray();
+                bool result = SendAndReceiveEcho(Command);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
-    public async Task<byte[]> ReadInput()
+    public bool[] ReadInput()
     {
-        List<byte> CommandList = [.. Encoding.ASCII.GetBytes(CommandStr[0])];
-        CommandList.AddRange(CRCGenerator(CommandList));
-        byte[] Command = CommandList.ToArray();
-        bool result = await SendAndReceiveEcho(Command);
-        byte
-        socket.Receive()
-        return new byte[] { };
+        lock (_lock)
+        {
+            List<byte> CommandList = [.. Encoding.ASCII.GetBytes(CommandStr[0])];
+            CommandList.AddRange(CRCGenerator(CommandList));
+            byte[] Command = CommandList.ToArray();
+            bool result = SendAndReceiveEcho(Command);
+            byte[] BytesReceive = new byte[12];
+            int ReceivedByteCount = socket.Receive(BytesReceive);
+            if (ReceivedByteCount != 12)
+            {
+                throw new Exception();
+            }
+            if (Encoding.ASCII.GetString(BytesReceive, 0, 8) != CommandStr[0])
+            {
+                throw new Exception();
+            }
+            // if (!CRCGenerator(BytesReceive.ToList()).SequenceEqual(new List<Byte> { 0x00, 0x00 }))
+            // {
+            //     Console.WriteLine(ByteArrayToHex(CRCGenerator(BytesReceive.ToList()).ToArray()));
+            //     Console.WriteLine(CRCGenerator(BytesReceive.ToList()).SequenceEqual(new List<Byte> { 0x00, 0x00 }));
+            //     Console.WriteLine(ByteArrayToHex(BytesReceive));
+            //     throw new Exception();
+            // }
+            bool[] InputData = new bool[16];
+            for (int i = 0; i < 16; i++)
+            {
+                if (((BytesReceive[7 + i / 8] >> (i%8)) & 1) == 0x01)
+                {
+                    InputData[i] = true;
+                }
+            }
+            return InputData;
+        }
     }
 
     public bool Disconnect()
     {
-        return false;
+        lock (_lock)
+        {
+            socket.Disconnect(true);
+            return false;
+        }
     }
 
     public bool ValidateEcho(byte[] Sent, byte[] Receive)//To check the echo message is as expected
@@ -148,7 +176,7 @@ public class TCPClientService
         {
             if (OutputArray[i])
             {
-                TwoByte[i / 8] |= (byte) (1 << (i % 8));
+                TwoByte[i / 8] |= (byte)(1 << (i % 8));
             }
         }
 
@@ -178,5 +206,20 @@ public class TCPClientService
         }
         List<byte> CRC = new List<byte>() { (byte)(crc & 0xFF), (byte)((crc >> 8) & 0xFF) };
         return CRC;
+    }
+
+    public string ByteArrayToHex(byte[] bytes)
+    {
+        string separator = " ";
+        StringBuilder hex = new StringBuilder(bytes.Length * (2 + separator.Length));
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            if (i > 0)
+            {
+                hex.Append(separator);
+            }
+            hex.AppendFormat("{0:x2}", bytes[i]);
+        }
+        return hex.ToString();
     }
 }

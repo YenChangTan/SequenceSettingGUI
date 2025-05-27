@@ -9,17 +9,27 @@
     <!-- <UserControl.DataContext>
         <vm:RobotSettingUserControlViewModel/>
     </UserControl.DataContext> -->
-    <Grid>
-        <StackPanel>
-            <TextBox Text = "{Binding IPAddress}"/>
-            <Button Content= "Connect" Command= "{Binding ConnectCommand}" Width="100" Height="30"/>
-            <Ellipse  Width="30" Height="30">
-                <Ellipse.Fill>
-                    <Binding Path="IsConnected" Converter="{StaticResource BooleanToStatusFillConverter}"/>
-                </Ellipse.Fill>
-            </Ellipse>
-            <TextBlock Text= "{Binding IPAddress}"/>
-        </StackPanel>
+    <DockPanel>
 
-    </Grid>
+        <StackPanel DockPanel.Dock = "Top">
+            <TextBox Name="IP" Text="{Binding _mcu.IP}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <TextBox Name="Port" Text = "{Binding _mcu.Port}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Button Name="ConnectButton" Content="Connect" Command="{Binding _mcu.ConnectToMCUCommand}" Width="500" Height="30"/>
+        </StackPanel>
+        <Grid DockPanel.Dock = "Bottom">
+            <ItemsControl ItemsSource = "{Binding _mcu.outputsInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding output.WriteOutputOn}" Height="30"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <TextBlock Text="Robot Page here"/>
+    </DockPanel>
 </UserControl>

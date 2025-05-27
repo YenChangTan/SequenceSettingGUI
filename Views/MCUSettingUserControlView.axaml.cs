@@ -10,6 +10,10 @@ using System.Threading;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using SequenceSettingGUI.ViewModels;
+using Avalonia.VisualTree;
+using ReactiveUI;
+using System.Reactive.Disposables;
+using System.Diagnostics;
 
 
 namespace SequenceSettingGUI.Views;

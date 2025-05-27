@@ -90,3 +90,4 @@
 /home/sip-rnd/SequenceSettingGUI/obj/Debug/net8.0/SequenceSettingGUI.csproj.CopyComplete
 /home/sip-rnd/SequenceSettingGUI/obj/Debug/net8.0/SequenceSettingGUI.genruntimeconfig.cache
 /home/sip-rnd/SequenceSettingGUI/obj/Debug/net8.0/ref/SequenceSettingGUI.dll
+/home/sip-rnd/SequenceSettingGUI/obj/Debug/net8.0/SequenceSettingGUI.sourcelink.json

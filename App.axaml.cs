@@ -9,6 +9,9 @@ using SequenceSettingGUI.Views;
 using Splat;
 using ReactiveUI;
 using SequenceSettingGUI.Converters;
+using SequenceSettingGUI.Services;
+using SequenceSettingGUI.Interfaces;
+using SequenceSettingGUI.Models;
 
 namespace SequenceSettingGUI;
 
@@ -21,6 +24,16 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        Locator.CurrentMutable.RegisterLazySingleton<ITCPClientService>(() => new TCPClientService());
+        Locator.CurrentMutable.RegisterLazySingleton(() =>
+            new MCU(Locator.Current.GetService<ITCPClientService>()), typeof(MCU)
+        );
+        Locator.CurrentMutable.Register(() =>
+            new MCUSettingUserControlViewModel(Locator.Current.GetService<MCU>()), typeof(MCUSettingUserControlViewModel)
+        );
+        Locator.CurrentMutable.Register(() =>
+            new RobotSettingUserControlViewModel(Locator.Current.GetService<MCU>()), typeof(RobotSettingUserControlViewModel)
+        );
         Locator.CurrentMutable.Register(() => new MCUSettingUserControlView(), typeof(IViewFor<MCUSettingUserControlViewModel>));
         Locator.CurrentMutable.Register(() => new RobotSettingUserControlView(), typeof(IViewFor<RobotSettingUserControlViewModel>));
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
