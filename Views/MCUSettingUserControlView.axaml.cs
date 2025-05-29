@@ -14,6 +14,8 @@ using Avalonia.VisualTree;
 using ReactiveUI;
 using System.Reactive.Disposables;
 using System.Diagnostics;
+using Avalonia.Controls.ApplicationLifetimes;
+using System.Reactive.Linq;
 
 
 namespace SequenceSettingGUI.Views;
@@ -23,6 +25,8 @@ public partial class MCUSettingUserControlView : ReactiveUserControl<MCUSettingU
     public MCUSettingUserControlView()
     {
         InitializeComponent();
+        
+    
     }
 
     private void InitializeComponent()

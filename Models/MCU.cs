@@ -54,7 +54,7 @@ public class MCU : ReactiveObject
         {
             outputsInputs.Add(new OutputInput(new Output(_itcpClientService, i), new Input(i)));
         }
-        CheckInputTimer = new System.Timers.Timer(1000);
+        CheckInputTimer = new System.Timers.Timer(500);
         CheckInputTimer.AutoReset = true;
         CheckInputTimer.Elapsed += UpdateInput;
     }

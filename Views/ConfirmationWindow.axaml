@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:reactive="using:ReactiveUI"
+        x:Class="SequenceSettingGUI.Views.ConfirmationWindow"
+        xmlns:vm="using:SequenceSettingGUI.ViewModels"
+        x:DataType ="vm:ConfirmationWindowViewModel"
+        Width="400" Height="300" Title="Set Outputs">
+    <StackPanel Margin="10" Spacing="10">
+        <WrapPanel>
+            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" MaxWidth="300" HorizontalAlignment="Center"/>
+        </WrapPanel>
+
+        <!-- <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+            <Button Content="OK" Command="{Binding OkCommand}" IsDefault="True"
+                    CommandParameter="{Binding}" Click="OkButton_Click"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"
+                    Click="CancelButton_Click"/>
+        </StackPanel> -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+            <Button Content="OK" Command="{Binding OkCommand}" IsDefault="True"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

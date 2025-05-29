@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
@@ -125,11 +127,21 @@ public class TCPClientService : ITCPClientService
             CommandList.AddRange(CRCGenerator(CommandList));
             byte[] Command = CommandList.ToArray();
             bool result = SendAndReceiveEcho(Command);
-            byte[] BytesReceive = new byte[12];
+            byte[] BytesReceive = new byte[14];
             int ReceivedByteCount = socket.Receive(BytesReceive);
-            if (ReceivedByteCount != 12)
+
+            if (ReceivedByteCount != 14)
             {
-                throw new Exception();
+                if (ReceivedByteCount < 14)
+                {
+                    Console.WriteLine("less than 14");
+                    Console.WriteLine(ByteArrayToHex(BytesReceive));
+                    //throw new Exception();
+                }
+                else
+                {
+                    Console.WriteLine("more than 14");
+                }
             }
             if (Encoding.ASCII.GetString(BytesReceive, 0, 8) != CommandStr[0])
             {
@@ -145,11 +157,13 @@ public class TCPClientService : ITCPClientService
             bool[] InputData = new bool[16];
             for (int i = 0; i < 16; i++)
             {
-                if (((BytesReceive[7 + i / 8] >> (i%8)) & 1) == 0x01)
+                if (((BytesReceive[8 + i / 8] >> (i % 8)) & 1) == 0x01)
                 {
                     InputData[i] = true;
                 }
             }
+            Console.WriteLine("right at 14");
+            Console.WriteLine(ByteArrayToHex(BytesReceive));
             return InputData;
         }
     }
@@ -213,6 +227,22 @@ public class TCPClientService : ITCPClientService
         string separator = " ";
         StringBuilder hex = new StringBuilder(bytes.Length * (2 + separator.Length));
         for (int i = 0; i < bytes.Length; i++)
+        {
+            if (i > 0)
+            {
+                hex.Append(separator);
+            }
+            hex.AppendFormat("{0:x2}", bytes[i]);
+        }
+        return hex.ToString();
+    }
+    
+    public string ByteArrayToHex(byte[] bytes, int toChange)
+    {
+        int Length = Math.Min(toChange, bytes.Length);
+        string separator = " ";
+        StringBuilder hex = new StringBuilder(Length * (2 + separator.Length));
+        for (int i = 0; i < Length; i++)
         {
             if (i > 0)
             {

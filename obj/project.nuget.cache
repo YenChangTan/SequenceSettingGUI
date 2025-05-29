@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0y52BMY3aa3frPM9wORrhSOWpF21/06FlW2ZRxtAyfHK96CuXHFd8uaIFdENd42V19U4VZsrJpwnSkrFvX+lUA==",
+  "dgSpecHash": "RX20WP+jWOXaeMKvvSdpX5KdZ1p+OaNrOSMqehcAqtM2uvkLvSCzuYk7c6aETw4XXmBm+ARGd54xh9vTjBGWDA==",
   "success": true,
   "projectFilePath": "/home/sip-rnd/SequenceSettingGUI/SequenceSettingGUI.csproj",
   "expectedPackageFiles": [
@@ -21,7 +21,7 @@
     "/home/sip-rnd/.nuget/packages/avalonia.themes.simple/11.3.0/avalonia.themes.simple.11.3.0.nupkg.sha512",
     "/home/sip-rnd/.nuget/packages/avalonia.win32/11.3.0/avalonia.win32.11.3.0.nupkg.sha512",
     "/home/sip-rnd/.nuget/packages/avalonia.x11/11.3.0/avalonia.x11.11.3.0.nupkg.sha512",
-    "/home/sip-rnd/.nuget/packages/communitytoolkit.mvvm/8.2.1/communitytoolkit.mvvm.8.2.1.nupkg.sha512",
+    "/home/sip-rnd/.nuget/packages/communitytoolkit.mvvm/8.4.0/communitytoolkit.mvvm.8.4.0.nupkg.sha512",
     "/home/sip-rnd/.nuget/packages/dynamicdata/9.1.2/dynamicdata.9.1.2.nupkg.sha512",
     "/home/sip-rnd/.nuget/packages/h.reactiveui.commoninteractions.avalonia/1.0.56/h.reactiveui.commoninteractions.avalonia.1.0.56.nupkg.sha512",
     "/home/sip-rnd/.nuget/packages/h.reactiveui.commoninteractions.core/1.0.56/h.reactiveui.commoninteractions.core.1.0.56.nupkg.sha512",

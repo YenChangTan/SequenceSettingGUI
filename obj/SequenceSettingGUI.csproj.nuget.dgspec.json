@@ -64,7 +64,7 @@
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
-              "version": "[8.2.1, )"
+              "version": "[8.4.0, )"
             },
             "H.ReactiveUI.CommonInteractions.Avalonia": {
               "target": "Package",

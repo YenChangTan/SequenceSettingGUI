@@ -14,7 +14,7 @@ namespace SequenceSettingGUI.ViewModels;
 
 public partial class OutputsSettingDialogWindowViewModel:ReactiveObject
 {
-    public ObservableCollection<OutputState> OutputStates { get; set; } = new ObservableCollection<OutputState> { };
+    public ObservableCollection<CheckedState> OutputStates { get; set; } = new ObservableCollection<CheckedState> { };
 
     public ReactiveCommand<Unit, bool[]> OkCommand { get; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
@@ -25,7 +25,7 @@ public partial class OutputsSettingDialogWindowViewModel:ReactiveObject
     {
         foreach (var initialState in initialStates)
         {
-            OutputStates.Add(new OutputState()
+            OutputStates.Add(new CheckedState()
             {
                 IsChecked = initialState
             });            

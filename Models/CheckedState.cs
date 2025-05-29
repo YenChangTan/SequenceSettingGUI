@@ -2,7 +2,7 @@ using ReactiveUI;
 
 namespace SequenceSettingGUI.Models;
 
-public class OutputState : ReactiveObject
+public class CheckedState : ReactiveObject
 {
     private bool _isChecked = false;
     public bool IsChecked

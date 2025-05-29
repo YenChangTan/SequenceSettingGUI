@@ -21,7 +21,7 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="H.ReactiveUI.CommonInteractions.Avalonia" Version="1.0.56" />
     <PackageReference Include="ReactiveUI" Version="20.2.45" />
     <PackageReference Include="ReactiveUI.Blazor" Version="20.2.45" />

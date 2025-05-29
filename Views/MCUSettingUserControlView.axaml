@@ -97,7 +97,96 @@
             </ItemsControl>
             <Button Grid.Column="16" Content="All" Command="{Binding _mcu.WriteOutputCommand}" HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch"/>
         </Grid>
-        <Grid>
-        </Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
+                <Button Content="Edit" Command="{Binding EditSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Add" Command="{Binding AddSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Delete" Command="{Binding DeleteSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Up" Command="{Binding UpSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Down" Command="{Binding DownSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Run" Command="{Binding UpSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Run All" Command="{Binding UpSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Pause" Command="{Binding UpSequenceCommand}" Width="100" Height="30"/>
+                <Button Content="Stop" Command="{Binding UpSequenceCommand}" Width="100" Height="30"/>
+            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ListBox ItemsSource = "{Binding sequenceBlocksList}" SelectedIndex="{Binding SelectedSequenceBlockIndex}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="1" BorderBrush="White">
+                                <StackPanel Orientation = "Vertical">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width = "*"/>
+                                            <ColumnDefinition Width = "*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Delay Time Before Output"/>
+                                        <TextBlock Grid.Column = "1" Text= "{Binding DelayTimeBeforeOutput}" HorizontalAlignment="Stretch" />
+                                    </Grid>
+                                    <WrapPanel>
+                                        <ItemsControl ItemsSource="{Binding Outputs}">
+                                            <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <UniformGrid Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Rectangle Fill="{Binding IsChecked , Converter={StaticResource BooleanToStatusFillConverter}}" Width="40" Height="40" Margin="2"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </WrapPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width = "*"/>
+                                            <ColumnDefinition Width = "*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Delay Time After Output"/>
+                                        <TextBlock Grid.Column = "1" Text= "{Binding DelayTimeAfterOutput}" HorizontalAlignment="Stretch" />
+                                    </Grid>
+                                    <WrapPanel>
+                                        <ItemsControl ItemsSource="{Binding Inputs}">
+                                            <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <UniformGrid Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Rectangle Fill="{Binding IsChecked , Converter={StaticResource BooleanToStatusFillConverter}}" Width="40" Height="40" Margin="2"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </WrapPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width = "*"/>
+                                            <ColumnDefinition Width = "*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Regular Input Checking Time"/>
+                                        <TextBlock Grid.Column = "1" Text= "{Binding CheckingInputRegularTime}" HorizontalAlignment="Stretch" />
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width = "*"/>
+                                            <ColumnDefinition Width = "*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Checking Input Time Out"/>
+                                        <TextBlock Grid.Column = "1" Text= "{Binding CheckingInputTimeout}" HorizontalAlignment="Stretch" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+            </ScrollViewer>
+        </DockPanel>
     </DockPanel>
 </UserControl>
